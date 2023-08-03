@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctsi.ssdc.project.mapper.SrHqfileMapper">
+
+    <select id="getSrHqfileList" parameterType="com.ctsi.ssdc.project.domain.SrHqfile" resultType="com.ctsi.ssdc.project.domain.SrHqfile">
+        select
+            a.id as id,
+            a.file_name as fileName,
+            a.module_id as moduleId,
+            b.module_name as moduleName,
+            a.create_by as createBy,
+            a.create_time as createTime
+        from
+            sr_hqfile a,sr_hqmb b
+        where
+            1=1
+        <if test="fileName != null and fileName!=''">
+            and file_name like concat ('%', #{fileName}, '%')
+        </if>
+        order by a.create_time desc
+    </select>
+
+
+    <select id="getSrHqfileById" parameterType="java.lang.Long" resultType="com.ctsi.ssdc.project.domain.SrHqfile">
+        select
+            a.id as id,
+            a.file_name as fileName,
+            a.module_id as moduleId,
+            b.module_name as moduleName,
+            a.create_by as createBy,
+            a.create_time as createTime,
+            a.file_content as fileContent
+        from
+            sr_hqfile a,sr_hqmb b
+        where
+            a.id = #{id}
+    </select>
+
+</mapper>

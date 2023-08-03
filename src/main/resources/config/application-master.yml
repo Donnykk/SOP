@@ -1,0 +1,367 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# ===================================================================
+logging:
+   #日志级别
+   level:
+      ROOT: DEBUG
+spring:
+   #激活一个或多个配置
+   profiles:
+      active: master
+      include: swagger
+   http:
+      encoding:
+         charset: UTF-8
+         force: true
+         enabled: true
+   jackson:
+      #格式化输出
+      serialization.indent_output: true
+      #时区
+      time-zone: GMT+8
+   jpa:
+      hibername:
+         #使用@Entity时，控制表结构生成行为，none是什么都不做
+         ddl-auto: none
+         #数据库开关
+   liquibase:
+      #数据库初始化开关
+      enabled: true
+      #初始化脚本路径
+      change-log: classpath:/db/changelog/master.xml
+
+   #数据源
+   datasource:
+      #数据库驱动
+      driverClassName: com.mysql.cj.jdbc.Driver
+      #数据库连接
+      url: jdbc:mysql://localhost:3306/udp6hx?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&nullCatalogMeansCurrent=true&allowPublicKeyRetrieval=true
+      # 自定义表单数据库
+      db-name: udp6hx
+      # 哪些数据表不进行显示,正则表达式
+      db-filter: ^([0-9]|cscp_|act_|ACT_|qrtz_|sys_|databasechange|kafka_|monitor_|code_template_suite).*$
+
+      #数据库连接池
+      type: com.zaxxer.hikari.HikariDataSource
+      #数据库用户名
+      username: root
+      #数据库密码
+      password: ENC(zLWiy1Mw6jOd6nMlWFx9tQ==)
+
+      hikari:
+         #最大连接池数
+         maximumPoolSize: 20
+      #是否自定义配置
+      cachePrepStmts: true
+      #连接池大小
+      prepStmtCacheSize: 250
+      #单条语句最大长度
+      prepStmtCacheSqlLimit: 2048
+      #新版本MySQL支持服务器端准备，是否开启
+      useServerPrepStmts: true
+      #国际化
+      messages:
+         #配置路径
+         basename: i18n/messages
+         #字符集
+         encoding: UTF-8
+      servlet:
+         multipart:
+            max-file-size: 50MB
+            max-request-size: 100MB
+      cache:
+         type: ehcache
+         ehcache:
+            config: classpath:cacheable/workWxCache.xml
+      quartz:
+         properties:
+            org:
+               quartz:
+                  scheduler:
+                     instanceId: AUTO
+                     instanceName: BiyiScheduler
+                  jobStore:
+                     #持久化配置
+                     class: org.quartz.impl.jdbcjobstore.JobStoreTX
+                     useProperties: false
+                     #数据库表前缀
+                     tablePrefix: qrtz_
+                     #在被认为“失火”之前，调度程序将“容忍”一个Triggers将其下一个启动时间通过的毫秒数。默认值（如果您在配置中未输入此属性）为60000（60秒）。
+                     misfireThreshold: 12000
+                     #设置此实例“检入”*与群集的其他实例的频率（以毫秒为单位）。影响检测失败实例的速度。
+                     clusterCheckinInterval: 5000
+                     driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+                     #打开群集功能
+                     isClustered: true
+                  threadPool:
+                     class: org.quartz.simpl.SimpleThreadPool
+                     threadCount: 20
+                     threadPriority: 5
+                     threadsInheritContextClassLoaderOfInitializingThread: true
+         # 自动启动
+         auto-startup: true
+         # 启动时更新己存在的Job，这样就不用每次修改targetObject后删除qrtz_job_details表对应记录了
+         overwrite-existing-jobs: true
+         # 延时启动
+         startup-delay: 1
+         scheduler-name: BiyiScheduler
+         job-store-type: jdbc
+
+   #ES服务配置
+elasticsearch:
+   #协议
+   schema: http
+   #集群地址，如果有多个用“,”隔开
+   address: es-udp.chandao27-udp6hx-dev-env.es.devops.com:80
+   #连接超时时间
+   connectTimeout: 5000
+   #Socket 连接超时时间
+   socketTimeout: 5000
+   #获取连接的超时时间
+   connectionRequestTimeout: 5000
+   #最大连接数
+   maxConnectNum: 100
+   #最大路由连接数
+   maxConnectPerRoute: 100
+
+workwx:
+   # corpid企业ID
+   appid: wwb0f0cfffa4d9e85f
+   #授权方的网页应用ID
+   agentid: 1000002
+   #重定向地址。域名(udp6hx.devops.com)要求跟企业微信应用授权回调域保持一致，否则无法使用
+   redirectUri: http://udp6hx.devops.com/api/system/workWxLogin/callback
+   state:
+   #应用的凭证密钥
+   secret: iJ-SUm-hlMgl8WVuXZtSAgyFrQJAwHken7LFZ2mmlUQ
+   #重定向至前端的路由。根据前端路由配置进行修改,/#保留！！！
+   route: /#/thirdAuthLogin
+   #通讯录Secret，跟应用的凭证密钥不是同一个！！！
+   tongXunLuSecret: cR74taJaehL0fYWqiTNyDYue6t7iP0MKf4nxCQlo2Rc
+   # 获取token地址
+   accessTokenUrl: https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid={corpId}&corpsecret={corpsecret}
+   # 获取用户id地址
+   getUserIDUrl: https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   # 获取用户信息地址
+   getUserUrl: https://qyapi.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&userid=USERID
+   # 获取部门列表地址1（获取指定部门 部门id。获取指定部门及其下的子部门。 如果不填，默认获取全量组织架构）
+   getDepartmentUrl1: https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=ACCESS_TOKEN&id=ID
+   # 获取部门列表地址2 (获取全部 部门id。获取指定部门及其下的子部门。 如果不填，默认获取全量组织架构)
+   getDepartmentUrl2: https://qyapi.weixin.qq.com/cgi-bin/department/list?access_token=ACCESS_TOKEN
+   # 获取部门成员详情信息 GET
+   getDepartmentUsersDetailUrl: https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD
+
+tianyi:
+   # 开发者在天翼账号开放平台申请获取的应用ID
+   appId: 8148469033
+   # 合作方申请的appId对应的appSecret
+   appSecret: 2eN8unYNUhbaxGTB5UZ86p7gVBx1qOU9
+   # 登录扫描回调的接口
+   returnUrl: http://udp6hx.devops.com/api/system/thirdAuth/tianyi/accessToken
+   # 值为normal或popping（normal为正常嵌入页面，popping为弹出式页面,默认normal）
+   pageKey: normal
+   #重定向至前端的路由。根据前端路由配置进行修改,/#保留！！！
+   route: /#
+
+
+server:
+   #端口号
+   port: 9000
+   tomcat:
+      max-connections: 10000 # 最大连接数
+      connection-timeout: 1000 #连接超时
+      uri-encoding: UTF-8
+ctsi:
+   # 前端web域名
+   web-domain-name: http://localhost:8080
+   # 重复提交时间：3s
+   repeat-submit-lock: 3
+   upload:
+      uploadPath: D:/temp
+   import:
+      importPath: D:/ctsi/import
+
+      # CORS is only enabled by default with the "dev" profile, so BrowserSync can access the API
+   cors:
+      #允许源 默认为允许所有，可以根据实际情况设置源
+      allowed-origins: "*"
+      #允许的HTTP方法
+      allowed-methods: "*"
+      #允许的字段
+      allowed-headers: "*"
+      #可从请求头中获取的字段
+      exposed-headers: "Authorization,Link,X-Total-Count,Content-Disposition"
+      #允许发送处理COOKIE
+      allow-credentials: true
+      #缓存时间
+      max-age: 1800
+   #允许跨域，多个以逗号分隔
+   corspaths: "/api/**"
+   #新增用户默认密码
+   login-password: ENC(bmUkSzLPVemigQeR42tCWMvpOxE2fbba)
+   log:
+      #是否启用操作日志
+      operation-log:
+         enable: true
+      #是否启用登录日志
+      login-log:
+         enable: true
+      #是否启用组件调用日志
+      component-call-log:
+         enable: true
+         #地市名称或部门名称
+         company: hongxin
+         #项目名称
+         project-name: udp6.8.3
+
+   security:
+      authentication:
+         jwt:
+            #token key密钥
+            secret: my-secret-token-to-change-in-production
+            #token失效时间，秒
+            token-validity-in-seconds: 86400
+            #rememberme token失效时间
+            token-validity-in-seconds-for-remember-me: 2592000
+         cas:
+            casServerUrlPrefix: http://localhost:8080/cas
+   captcha:
+      #验证码KEY策略
+      keyProvider: simpleCaptchaKeyProvider
+      #验证码组件缓存实现，提供两种实现，redis和基于guava的缓存，redis支持集群部署，guava只支持单机使用。可选值：guavaCaptchaCache，redisCaptchaCache
+      cache: guavaCaptchaCache
+   password-check:
+      #密码过期时间，单位 月
+      expire-months: 3
+      #密码最小长度
+      check-min-length: 8
+      #密码最大长度
+      check-max-length: 20
+      #检查密码包含小写字母
+      check-lowercase: true
+      #检查密码包含大写字母
+      check-uppercase: true
+      #检查密码包含数字
+      check-digit: true
+      #检查密码包含键盘相邻字符，密码不应包含键盘上横向或者纵向任意连续的四个字符或shift转换字符
+      check-keyboard: true
+      #检查密码包含特殊字符
+      check-special-character: true
+      # 检查密码包含用户名，true:开启，即不能包含用户名
+      check-contains-username: true
+      # 检查密码包含租户账号，true:开启，即不能包含租户账号
+      check-contains-tenantAccount: true
+   login:
+      #密码输错达到次数，锁定用户
+      bad-password-attempts: 5
+      #密码错误次数
+      captcha-attempts: 0
+      #锁定时间，单位s
+      lockout-time: 3600
+      #记录密码错误缓存实现，提供两种实现，redis和基于guava的缓存，redis支持集群部署，guava只支持单机使用。可选值：guavaLoginCache，redisLoginCache
+      cache: guavaLoginCache
+   #统计认证组件路径配置
+   component-statics:
+      #日志存放路径
+      log-path: /log
+      #证书路径
+      cert-path: classpath:/license.lc
+   #密码加密私钥  请生成模板工程后立即修改
+   RSA-prikey: MIICdgIBADANBgkqhkiG9w0BAQEFAASCAmAwggJcAgEAAoGBALQmvU3NVRAxu6uRlPpGS3R5o+YfxM3oTbnyXa1kwmBUI/+wvigqOugpiY08GRJKIsoWv3DAmp96wx55/oKEZFReMboNfSjFBF7R/n9SfISb82JwnDP3HCRTfiBu6jVUH8QDZBnl2XWuP2JKyKoosrr9AWVW7OyVF0BdhkLv2+mvAgMBAAECgYA3q3D8ReNvaa7wycAbxvUyPRSk3FRYvNyoBXllR6m5Usb9EITyrHofnBZhipzExhwSDw2BrkMZ3TnGhTRc6MSHuQAnkI8g1yB/UJRLX752M+m/MBEm/xNEK4D1z1yIueGv8zxjKVdNw8o8WGJV0V2FMKWLWW/r6PfcUTGERQNIQQJBANv9O2q0cEB7lujyuYvFVTKzG6d+msrzSqZ6yNWQSqVfGy5W2KE39Bg9Iklg0nWg0hWjO+Kn+wQ2BuidlpXn+ykCQQDRpBRx2w6y7yPR8ZThpHPK8HL0ZKarf7oW7ZViAXspL3hhnMXSeq9oTMctdm1riCTlAeJ6Cu5Rk/K0sjLRFbEXAkEAooCGEoVlYgypZjxeWWQUUlZB+FEqUP60xxNuJWvn6A7AClP2w+iMNBd8q02NSXzZk0g4JW7Gms65/bzjDqsFOQJAUFqz+3AbkjpXYIFYr6R5PbAsX8C0ocezbFZki8xFiOPJIKEWsjaURUYokiRyjGUCv0SZqm3GKz6qKNik4b+OwQJAfynVAyHawEWB7laoDiKMk4rtX55TQdtzqmIlfI63wMCmtAByOauQp6YiUzht6I73C/wBQ7o49ys0RTU0LyDQuQ==
+
+# 验证码配置
+aj:
+   captcha:
+      jigsaw: classpath:images/jigsaw
+      #滑动验证，底图路径，不配置将使用默认图片
+      ##支持全路径
+      # 支持项目路径,以classpath:开头,取resource目录下路径,例：classpath:images/pic-click
+      pic-click: classpath:images/pic-click
+      # local缓存的阈值,达到这个值，清除缓存
+      cache-number: 1000
+      # local定时清除过期缓存(单位秒),设置为0代表不执行
+      timing-clear: 180
+      # 验证码类型default两种都实例化。
+      type: default
+      # 右下角水印文字(我的水印)
+      water-mark: 树人学校
+      # 右下角水印字体(不配置时，默认使用文泉驿正黑)
+      # 由于宋体等涉及到版权，我们jar中内置了开源字体【文泉驿正黑】
+      # 方式一：直接配置OS层的现有的字体名称，比如：宋体
+      # 方式二：自定义特定字体，请将字体放到工程resources下fonts文件夹，支持ttf\ttc\otf字体
+      water-font: WenQuanZhengHei.ttf
+      # 点选文字验证码的文字字体(文泉驿正黑)
+      font-type: WenQuanZhengHei.ttf
+      # 校验滑动拼图允许误差偏移量(默认5像素)
+      slip-offset: 5
+      # aes加密坐标开启或者禁用(true|false)
+      aes-status: true
+      # 滑动干扰项(0/1/2)
+      interference-options: 2
+
+      history-data-clear-enable: true
+
+      # 接口请求次数一分钟限制是否开启 true|false
+      req-frequency-limit-enable: true
+      # 验证失败5次，get接口锁定
+      req-get-lock-limit: 5
+      # 验证失败后，锁定时间间隔,s
+      req-get-lock-seconds: 60
+      # get接口一分钟内请求数限制
+      req-get-minute-limit: 30
+      # check接口一分钟内请求数限制
+      req-check-minute-limit: 60
+      # verify接口一分钟内请求数限制
+      req-verify-minute-limit: 60
+#minio配置
+minio:
+   accessKey: AKIAIOSFODNN7EXAMPLE
+   secretKey: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+   endpoint: http://10.2.16.78:31246
+   bucketName: images
+#mybatis配置
+mybatis:
+   configLocation: classpath:/mybatis-config.xml
+pagehelper:
+   #分页设置
+   helperDialect: mysql
+   reasonable: true
+   supportMethodsArguments: true
+   pageSizeZero: true
+management:
+   health:
+      redis:
+         #关闭REDIS健康检查
+         enabled: false
+      elasticsearch:
+         #关闭ES健康检查
+         enabled: false
+magic-api:
+   # 配置api管理页面入口
+   web: /magic/web
+   # 配置存储方式
+   resource:
+      # 配置接口资源存储位置，可选file、database、redis
+      type: database
+      # 存储表名
+      tableName: magic_api_file
+      # 使用database、redis存储时的key前缀
+      prefix: /magic-api
+      # 是否是只读模式
+      readonly: false
+   # 启用驼峰命名转换
+   sql-column-case: camel
+   # 分页配置
+   page-config:
+      # 页大小的请求参数名称
+      size: size
+      # 页码的请求参数名称
+      page: page
+      # 未传页码时的默认页码
+      default-page: 1
+      # 未传页大小时的默认页大小
+      default-size: 10

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctsi.ssdc.project.mapper.SrStudentInfoMapper">
+
+
+    <select id="getStuPage" parameterType="com.ctsi.ssdc.project.domain.SrStudentInfo" resultType="com.ctsi.ssdc.project.domain.SrStudentInfo">
+        select
+            a.id as id,
+            a.class_id as classId,
+            a.stu_name as stuName,
+            a.sex as sex,
+            a.card_no as cardNo,
+            a.stu_id as stuId,
+            a.subject as subject,
+            a.status as status,
+            a.remark as remark,
+            a.create_by as createBy,
+            a.create_time as createTime,
+            a.update_by as updateBy,
+            a.update_time as updateTime,
+            b.class_name as className,
+            c.name as gradeName,
+            c.school as school
+        from
+            sr_student_info a,sr_class_info b,sr_grade_info c
+        where
+        1=1
+            and a.class_id = b.id
+            and b.grade_id = c.id
+            <if test="school != null and school != ''">
+               and c.school = #{school}
+            </if>
+            <if test="gradeName!=null and gradeName != ''">
+               and c.name = #{gradeName}
+            </if>
+            <if test="className !=null and className != ''">
+               and b.class_name = #{className}
+            </if>
+            <if test="stuName != null and stuName !=''">
+               and a.stu_name like concat('%', #{stuName}, '%') 
+            </if>
+            <if test="cardNo != null and cardNo !=''">
+                and a.card_no = #{cardNo}
+            </if>
+            <if test="stuId !=null and stuId !=''">
+                and a.stu_id = #{stuId}
+            </if>
+            <if test="subject != null and subject != ''">
+                and a.subject = #{subject}
+            </if>
+            <if test="status != null and status!=''">
+                and status = #{status}
+            </if>
+            order by a.create_time desc
+    </select>
+
+
+
+    <select id="getExistStudent" parameterType="java.lang.String" resultType="com.ctsi.ssdc.project.domain.SrStudentInfo">
+        select
+            *
+        from
+            sr_student_info
+        where
+            1=1
+        and
+            (stu_id = #{stuId} or card_no = #{cardNo})
+        limit 1
+    </select>
+
+    <select id="getStudentNum" parameterType="java.lang.String" resultType="java.lang.Integer">
+        select
+            count(1)
+        from
+            sr_student_info a,sr_class_info b,sr_school_info c
+        where
+            c.school = #{school}
+        and b.grade_id = c.id
+        and a.class_id = b.id
+    </select>
+
+</mapper>

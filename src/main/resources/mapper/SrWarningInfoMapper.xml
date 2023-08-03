@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ctsi.ssdc.project.mapper.SrWarningInfoMapper">
+    <select id="getPage" parameterType="com.ctsi.ssdc.project.domain.req.SrWarningReq" resultType="com.ctsi.ssdc.project.domain.SrWarningInfo">
+        select
+            a.id as id,
+            a.school as school,
+            a.warning_type as warningType,
+            a.warning_info as warningInfo,
+            a.warning_time as warningTime,
+            a.status as status,
+            b.responsible as responsible
+        from
+            sr_warning_info a left join sr_responsible_info b on a.warning_type = b.warning_type
+        where
+            1=1
+        <if test="school!=null and school!=''">
+            and a.school = #{school}
+        </if>
+        <if test="warningType!=null and warningType!=''">
+            and a.warning_type = #{warningType}
+        </if>
+        <if test="status != null ">
+            and a.status = #{status}
+        </if>
+        <if test="startTime !=null and endTime != null">
+            and a.warning_time between #{startTime} and #{endTime}
+        </if>
+    </select>
+
+
+    <select id="getWarningById" parameterType="java.lang.Long" resultType="com.ctsi.ssdc.project.domain.SrWarningInfo">
+        select
+            a.id as id,
+            a.school as school,
+            a.warning_type as warningType,
+            a.warning_info as warningInfo,
+            a.warning_time as warningTime,
+            a.status as status,
+            a.confirmer as confirmer,
+            a.confirm_time as confirmTime,
+            a.confirm_remark as confirmRemark,
+            a.handler as handler,
+            a.handle_time as handleTime,
+            a.handle_image as handleImage,
+            a.handle_remark as handleRemark,
+            b.responsible as responsible,
+            a.image as image
+        from
+            sr_warning_info a left join sr_responsible_info b on a.warning_type = b.warning_type
+        where
+            a.id = #{id}
+    </select>
+
+</mapper>
