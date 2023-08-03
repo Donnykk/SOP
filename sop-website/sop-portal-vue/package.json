@@ -1,0 +1,15 @@
+{
+  "name": "open-portal",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "tanghc",
+  "license": "MIT",
+  "devDependencies": {
+    "@vuepress/plugin-back-to-top": "^1.8.0",
+    "vuepress": "^1.8.0"
+  },
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs"
+  }
+}
