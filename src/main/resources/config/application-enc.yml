@@ -1,7 +1,0 @@
-jasypt:
-  encryptor:
-    #Enc盐值
-    password: udp6
-    property:
-      prefix: ENC(
-      suffix: )
