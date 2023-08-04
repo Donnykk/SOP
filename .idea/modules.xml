@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/doc/doc.iml" filepath="$PROJECT_DIR$/doc/doc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-sdk/sdk-java/sdk-java.iml" filepath="$PROJECT_DIR$/sop-sdk/sdk-java/sdk-java.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/shixi-main.iml" filepath="$PROJECT_DIR$/.idea/shixi-main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-admin/sop-admin.iml" filepath="$PROJECT_DIR$/sop-admin/sop-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-admin/sop-admin-server/sop-admin-server.iml" filepath="$PROJECT_DIR$/sop-admin/sop-admin-server/sop-admin-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-auth/sop-auth.iml" filepath="$PROJECT_DIR$/sop-auth/sop-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-common/sop-bridge-eureka/sop-bridge-eureka.iml" filepath="$PROJECT_DIR$/sop-common/sop-bridge-eureka/sop-bridge-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-common/sop-bridge-nacos/sop-bridge-nacos.iml" filepath="$PROJECT_DIR$/sop-common/sop-bridge-nacos/sop-bridge-nacos.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-common/sop-common.iml" filepath="$PROJECT_DIR$/sop-common/sop-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-example/sop-example.iml" filepath="$PROJECT_DIR$/sop-example/sop-example.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-gateway/sop-gateway.iml" filepath="$PROJECT_DIR$/sop-gateway/sop-gateway.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-common/sop-gateway-common/sop-gateway-common.iml" filepath="$PROJECT_DIR$/sop-common/sop-gateway-common/sop-gateway-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shixi-main/sop-parent.iml" filepath="$PROJECT_DIR$/shixi-main/sop-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-sdk/sop-sdk.iml" filepath="$PROJECT_DIR$/sop-sdk/sop-sdk.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-common/sop-service-common/sop-service-common.iml" filepath="$PROJECT_DIR$/sop-common/sop-service-common/sop-service-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-example/sop-springmvc/sop-springmvc.iml" filepath="$PROJECT_DIR$/sop-example/sop-springmvc/sop-springmvc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-example/sop-story/sop-story.iml" filepath="$PROJECT_DIR$/sop-example/sop-story/sop-story.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-test/sop-test.iml" filepath="$PROJECT_DIR$/sop-test/sop-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-website/sop-website.iml" filepath="$PROJECT_DIR$/sop-website/sop-website.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sop-website/sop-website-server/sop-website-server.iml" filepath="$PROJECT_DIR$/sop-website/sop-website-server/sop-website-server.iml" />
+    </modules>
+  </component>
+</project>

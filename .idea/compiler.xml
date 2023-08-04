@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="sop-auth" />
+        <module name="sop-test" />
+        <module name="sop-website-server" />
+        <module name="sop-bridge-eureka" />
+        <module name="sop-gateway-common" />
+        <module name="sop-admin-server" />
+        <module name="sop-bridge-nacos" />
+        <module name="sop-service-common" />
+        <module name="sdk-java" />
+        <module name="sop-story" />
+        <module name="sop-springmvc" />
+        <module name="doc" />
+        <module name="sop-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="doc" target="1.8" />
+      <module name="sdk-java" target="1.8" />
+      <module name="shixi-main" target="1.8" />
+      <module name="sop-admin" target="1.8" />
+      <module name="sop-admin-server" target="1.8" />
+      <module name="sop-auth" target="1.8" />
+      <module name="sop-bridge-eureka" target="1.8" />
+      <module name="sop-bridge-nacos" target="1.8" />
+      <module name="sop-common" target="1.8" />
+      <module name="sop-example" target="1.8" />
+      <module name="sop-gateway" target="1.8" />
+      <module name="sop-gateway-common" target="1.8" />
+      <module name="sop-parent" target="1.8" />
+      <module name="sop-sdk" target="1.8" />
+      <module name="sop-service-common" target="1.8" />
+      <module name="sop-springmvc" target="1.8" />
+      <module name="sop-story" target="1.8" />
+      <module name="sop-test" target="1.8" />
+      <module name="sop-website" target="1.8" />
+      <module name="sop-website-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_STRING" value="--add-opens jdk.compiler/com.sun.tools.javac.processing.javacprocessingenvironment=ALL-UNNAMED" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="doc" options="" />
+      <module name="sdk-java" options="-parameters" />
+      <module name="shixi-main" options="" />
+      <module name="sop-admin" options="" />
+      <module name="sop-admin-server" options="-parameters" />
+      <module name="sop-auth" options="-parameters" />
+      <module name="sop-bridge-eureka" options="-parameters" />
+      <module name="sop-bridge-nacos" options="-parameters" />
+      <module name="sop-common" options="" />
+      <module name="sop-example" options="" />
+      <module name="sop-gateway" options="-parameters" />
+      <module name="sop-gateway-common" options="-parameters" />
+      <module name="sop-sdk" options="" />
+      <module name="sop-service-common" options="" />
+      <module name="sop-springmvc" options="-parameters" />
+      <module name="sop-story" options="-parameters" />
+      <module name="sop-test" options="-parameters" />
+      <module name="sop-website" options="" />
+      <module name="sop-website-server" options="-parameters" />
+    </option>
+  </component>
+</project>
