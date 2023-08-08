@@ -1,4 +1,4 @@
-<template>
+ <template>
   <div class="app-container">
     <h3>公共错误码</h3>
     <div class="isp-info">

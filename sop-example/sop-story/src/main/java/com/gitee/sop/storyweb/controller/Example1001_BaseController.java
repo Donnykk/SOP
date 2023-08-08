@@ -7,45 +7,23 @@ import com.gitee.sop.servercommon.annotation.Open;
 import com.gitee.sop.servercommon.bean.OpenContext;
 import com.gitee.sop.servercommon.bean.ServiceContext;
 import com.gitee.sop.servercommon.exception.ServiceException;
-import com.gitee.sop.storyweb.controller.param.ArrayElementParam;
-import com.gitee.sop.storyweb.controller.param.CategoryParam;
-import com.gitee.sop.storyweb.controller.param.GoodsParam;
-import com.gitee.sop.storyweb.controller.param.LargeTextParam;
-import com.gitee.sop.storyweb.controller.param.MemberInfoGetParam;
-import com.gitee.sop.storyweb.controller.param.StoryParam;
-import com.gitee.sop.storyweb.controller.param.TypeEnum;
-import com.gitee.sop.storyweb.controller.result.CategoryResult;
-import com.gitee.sop.storyweb.controller.result.MemberInfoGetResult;
-import com.gitee.sop.storyweb.controller.result.MemberInfoGetResultMemberInfo;
-import com.gitee.sop.storyweb.controller.result.StoryResult;
-import com.gitee.sop.storyweb.controller.result.TestResult;
-import com.gitee.sop.storyweb.controller.result.TreeResult;
+import com.gitee.sop.storyweb.controller.param.*;
+import com.gitee.sop.storyweb.controller.result.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 签名验证通过后，到达这里进行具体的业务处理。
@@ -61,7 +39,7 @@ public class Example1001_BaseController {
     @Value("${server.port}")
     private int port;
 
-    // http://localhost:2222/stroy/get
+    // http://localhost:2222/story/get
     // 原生的接口，可正常调用
     @RequestMapping("/get")
     public StoryResult get() {
@@ -151,7 +129,7 @@ public class Example1001_BaseController {
     // 参数绑定，少量参数可以这样写，参数多了建议放进类里面
     @Open(value = "story.oneparam")
     @GetMapping("/oneParam/v1")
-    public StoryResult oneParam(@NotBlank(message = "id不能为空") String id, @NotBlank(message = "name不能为空")  String name) {
+    public StoryResult oneParam(@NotBlank(message = "id不能为空") String id, @NotBlank(message = "name不能为空") String name) {
         StoryResult result = new StoryResult();
         result.setName("id：" + id + ", name:" + name);
         return result;
@@ -215,17 +193,17 @@ public class Example1001_BaseController {
     }
 
     // 绑定复杂对象
-    @Open(value = "sdt.get",version = "4.0")
+    @Open(value = "sdt.get", version = "4.0")
     @RequestMapping("/get/v4")
     public TestResult getV4(@RequestBody TestResult testResult) {
-        if(StringUtils.isEmpty(testResult.getType())) {
+        if (StringUtils.isEmpty(testResult.getType())) {
             throw new ServiceException("testResult.getType() 不能为null");
         }
         return testResult;
     }
 
     // 获取header
-    @Open(value = "test.head",version = "1.0")
+    @Open(value = "test.head", version = "1.0")
     @GetMapping("/get/header/v1")
     public StoryResult header(@RequestBody StoryParam story, HttpServletRequest request) {
         HttpServletRequest servletRequest = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -299,6 +277,7 @@ public class Example1001_BaseController {
     }
 
     private static String json = "{\"flightDate\":\"2020-09-01\",\"flightNo\":\"HO1705\",\"departureAirport\":\"ZSCN\",\"arrivalAirport\":\"ZPLJ\",\"ycy\":\"11521\",\"lcy\":\"4354\",\"cr\":\"145\",\"et\":\"1\",\"ye\":\"0\",\"td\":\"0\",\"gw\":\"0\",\"ew\":\"146\",\"xl\":\"1018\",\"yj\":\"0\",\"hw\":\"635\"}";
+
     // 返回大数据
     @Open(value = "bigdata.get")
     @RequestMapping("/bigdata/v1")
@@ -318,7 +297,7 @@ public class Example1001_BaseController {
     public MemberInfoGetResult memberInfoGet(MemberInfoGetParam param) {
         MemberInfoGetResult result = new MemberInfoGetResult();
         MemberInfoGetResultMemberInfo memberInfo = new MemberInfoGetResultMemberInfo();
-        memberInfo.setIsVip((byte)1);
+        memberInfo.setIsVip((byte) 1);
         memberInfo.setVipEndtime(new Date());
         result.setName(JSON.toJSONString(param));
         result.setId(11);

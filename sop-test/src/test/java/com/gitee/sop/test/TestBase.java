@@ -1,13 +1,19 @@
 package com.gitee.sop.test;
 
 import com.alibaba.fastjson.JSON;
+import com.gitee.sop.test.alipay.AlipaySignature;
 import junit.framework.TestCase;
+import org.junit.Assert;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -72,7 +78,7 @@ public class TestBase extends TestCase {
         for (Map.Entry<String, String> entry : params.entrySet()) {
             sb.append("&").append(entry.getKey()).append("=").append(entry.getValue());
         }
-        return sb.toString().substring(1);
+        return sb.substring(1);
     }
 
     protected static String buildUrlQuery(Map<String, String> params) {
@@ -84,7 +90,11 @@ public class TestBase extends TestCase {
                 e.printStackTrace();
             }
         }
-        return sb.toString().substring(1);
+        return sb.substring(1);
     }
 
+    @Test
+    public void test() throws Exception {
+        Assert.assertEquals(1,1);
+    }
 }

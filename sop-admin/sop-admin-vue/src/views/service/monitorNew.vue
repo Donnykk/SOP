@@ -2,10 +2,10 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFormData" class="demo-form-inline" size="mini" @submit.native.prevent>
       <el-form-item label="接口名">
-        <el-input v-model="searchFormData.routeId" :clearable="true" style="width: 250px;" />
+        <el-input v-model="searchFormData.routeId" :clearable="true" style="width: 250px;"/>
       </el-form-item>
       <el-form-item label="serviceId">
-        <el-input v-model="searchFormData.serviceId" :clearable="true" style="width: 250px;" />
+        <el-input v-model="searchFormData.serviceId" :clearable="true" style="width: 250px;"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" native-type="submit" @click="loadTable">查询</el-button>
@@ -128,7 +128,7 @@
           type="expand"
         >
           <template slot-scope="props">
-            <el-input v-model="props.row.errorMsg" type="textarea" :rows="8" readonly />
+            <el-input v-model="props.row.errorMsg" type="textarea" :rows="8" readonly/>
           </template>
         </el-table-column>
         <el-table-column
@@ -218,25 +218,25 @@ export default {
     this.loadTable()
   },
   methods: {
-    loadTable: function() {
-      this.post('monitornew.data.page', this.searchFormData, function(resp) {
+    loadTable: function () {
+      this.post('monitornew.data.page', this.searchFormData, function (resp) {
         this.pageInfo = resp.data
       })
     },
-    loadErrorData: function() {
-      this.post('monitornew.error.page', this.errorMsgFormData, function(resp) {
+    loadErrorData: function () {
+      this.post('monitornew.error.page', this.errorMsgFormData, function (resp) {
         this.errorMsgData.pageInfo = resp.data
         this.logDetailVisible = true
       })
     },
     loadInstanceMonitorInfo(row, treeNode, resolve) {
-      this.post('monitornew.routeid.data.get', { routeId: row.routeId }, resp => {
+      this.post('monitornew.routeid.data.get', {routeId: row.routeId}, resp => {
         const children = resp.data
         row.children = children
         resolve(children)
       })
     },
-    onShowErrorDetail: function(row) {
+    onShowErrorDetail: function (row) {
       this.errorMsgData.title = `错误日志 ${row.name}（${row.version}）`
       this.errorMsgData.name = row.name
       this.errorMsgData.version = row.version
@@ -244,35 +244,35 @@ export default {
       this.errorMsgFormData.instanceId = row.instanceId
       this.loadErrorData()
     },
-    onSolve: function(row) {
-      this.confirm('确认标记为已解决吗？', function(done) {
-        this.post('monitornew.error.solve', { routeId: row.routeId, errorId: row.errorId }, function(resp) {
+    onSolve: function (row) {
+      this.confirm('确认标记为已解决吗？', function (done) {
+        this.post('monitornew.error.solve', {routeId: row.routeId, errorId: row.errorId}, function (resp) {
           done()
           this.errorMsgFormData.pageIndex = 1
           this.loadErrorData()
         })
       })
     },
-    onCloseErrorDlg: function() {
+    onCloseErrorDlg: function () {
       this.loadTable()
     },
-    onErrorSizeChange: function(size) {
+    onErrorSizeChange: function (size) {
       this.errorMsgFormData.pageSize = size
       this.loadErrorData()
     },
-    onErrorPageIndexChange: function(pageIndex) {
+    onErrorPageIndexChange: function (pageIndex) {
       this.errorMsgFormData.pageIndex = pageIndex
       this.loadErrorData()
     },
-    onSizeChange: function(size) {
+    onSizeChange: function (size) {
       this.searchFormData.pageSize = size
       this.loadTable()
     },
-    onPageIndexChange: function(pageIndex) {
+    onPageIndexChange: function (pageIndex) {
       this.searchFormData.pageIndex = pageIndex
       this.loadTable()
     },
-    onAdd: function() {
+    onAdd: function () {
       this.dialogTitle = '新增IP'
       this.dialogVisible = true
       this.dialogFormData.id = 0

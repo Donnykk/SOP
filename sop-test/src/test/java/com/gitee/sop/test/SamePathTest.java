@@ -60,7 +60,7 @@ public class SamePathTest extends TestBase {
     public void testGet2() throws Exception {
 
         // 公共请求参数
-        Map<String, String> params = new HashMap<String, String>();
+        Map<String, String> params = new HashMap<>();
         params.put("app_id", appId);
         params.put("method", "springmvc.path.same");
         params.put("format", "json");

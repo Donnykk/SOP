@@ -2,7 +2,8 @@
   <div class="app-container">
     <el-form :inline="true" :model="searchFormData" class="demo-form-inline" size="mini">
       <el-form-item label="接口名">
-        <el-input v-model="searchFormData.routeId" :clearable="true" placeholder="输入接口名或版本号" style="width: 250px;" />
+        <el-input v-model="searchFormData.routeId" :clearable="true" placeholder="输入接口名或版本号"
+                  style="width: 250px;"/>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="loadTable">搜索</el-button>
@@ -134,13 +135,13 @@ export default {
     this.loadTable()
   },
   methods: {
-    loadTable: function() {
-      this.post('monitor.data.list', this.searchFormData, function(resp) {
+    loadTable: function () {
+      this.post('monitor.data.list', this.searchFormData, function (resp) {
         const data = resp.data
         this.tableData = data.monitorInfoData
       })
     },
-    onShowErrorDetail: function(row) {
+    onShowErrorDetail: function (row) {
       const errorMsgList = row.errorMsgList
       this.errorMsgDetail = errorMsgList.length > 0 ? errorMsgList.join('<br>') : '无内容'
       this.logDetailVisible = true

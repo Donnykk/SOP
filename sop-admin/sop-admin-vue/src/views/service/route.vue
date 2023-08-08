@@ -5,11 +5,11 @@
     </div>
     <div v-else>
       <el-tabs v-model="tabsActive" type="card" @tab-click="selectTab">
-        <el-tab-pane v-for="tabName in tabsData" :key="tabName" :label="tabName" :name="tabName" />
+        <el-tab-pane v-for="tabName in tabsData" :key="tabName" :label="tabName" :name="tabName"/>
       </el-tabs>
       <el-form :inline="true" :model="searchFormData" class="demo-form-inline" size="mini" @submit.native.prevent>
         <el-form-item label="路由名称">
-          <el-input v-model="searchFormData.id" :clearable="true" placeholder="输入接口名或版本号" />
+          <el-input v-model="searchFormData.id" :clearable="true" placeholder="输入接口名或版本号"/>
         </el-form-item>
         <el-form-item>
           <el-checkbox v-model="searchFormData.permission">授权接口</el-checkbox>
@@ -130,7 +130,7 @@
         label-width="180px"
         size="mini"
       >
-        <el-input v-show="false" v-model="routeDialogFormData.id" />
+        <el-input v-show="false" v-model="routeDialogFormData.id"/>
         <el-form-item label="接口名 (版本号)">
           {{ routeDialogFormData.name + (routeDialogFormData.version ? ' (' + routeDialogFormData.version + ')' : '') }}
         </el-form-item>
@@ -171,7 +171,10 @@
         </el-form-item>
         <el-form-item label="角色">
           <el-checkbox-group v-model="authDialogFormData.roleCode">
-            <el-checkbox v-for="item in roles" :key="item.roleCode" :label="item.roleCode">{{ item.description }}</el-checkbox>
+            <el-checkbox v-for="item in roles" :key="item.roleCode" :label="item.roleCode">{{
+                item.description
+              }}
+            </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
@@ -194,7 +197,7 @@
         label-width="200px"
       >
         <el-form-item label="服务名（serviceId）" prop="serviceId">
-          <el-input v-model="addServiceForm.serviceId" placeholder="服务名，如：order-service" />
+          <el-input v-model="addServiceForm.serviceId" placeholder="服务名，如：order-service"/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -205,17 +208,27 @@
   </div>
 </template>
 <style>
-  .custom-tree-node {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 14px;
-    padding-right: 8px;
-  }
-  .el-input.is-disabled .el-input__inner {color: #909399;}
-  .el-radio__input.is-disabled+span.el-radio__label {color: #909399;}
-  .roles-content { cursor: pointer;color: #20a0ff }
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+}
+
+.el-input.is-disabled .el-input__inner {
+  color: #909399;
+}
+
+.el-radio__input.is-disabled + span.el-radio__label {
+  color: #909399;
+}
+
+.roles-content {
+  cursor: pointer;
+  color: #20a0ff
+}
 </style>
 <script>
 export default {
@@ -259,19 +272,19 @@ export default {
       },
       routeDialogFormRules: {
         name: [
-          { required: true, message: '不能为空', trigger: 'blur' },
-          { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
+          {required: true, message: '不能为空', trigger: 'blur'},
+          {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur'}
         ],
         version: [
-          { required: true, message: '不能为空', trigger: 'blur' },
-          { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
+          {required: true, message: '不能为空', trigger: 'blur'},
+          {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur'}
         ],
         uri: [
-          { required: true, message: '不能为空', trigger: 'blur' },
-          { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
+          {required: true, message: '不能为空', trigger: 'blur'},
+          {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur'}
         ],
         path: [
-          { min: 0, max: 100, message: '长度不能超过 100 个字符', trigger: 'blur' }
+          {min: 0, max: 100, message: '长度不能超过 100 个字符', trigger: 'blur'}
         ]
       },
       routeDialogVisible: false,
@@ -288,8 +301,8 @@ export default {
       },
       addServiceFormRules: {
         serviceId: [
-          { required: true, message: '请输入服务名称', trigger: 'blur' },
-          { min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur' }
+          {required: true, message: '请输入服务名称', trigger: 'blur'},
+          {min: 1, max: 100, message: '长度在 1 到 100 个字符', trigger: 'blur'}
         ]
       }
     }
@@ -305,7 +318,7 @@ export default {
   },
   methods: {
     loadTabs() {
-      this.post('registry.service.list', {}, function(resp) {
+      this.post('registry.service.list', {}, function (resp) {
         this.tabsData = resp.data
         this.$nextTick(() => {
           if (this.tabsData.length > 0) {
@@ -316,8 +329,8 @@ export default {
       })
     },
     // 加载树
-    loadTree: function() {
-      this.post('registry.service.list', {}, function(resp) {
+    loadTree: function () {
+      this.post('registry.service.list', {}, function (resp) {
         const respData = resp.data
         this.treeData = this.convertToTreeData(respData, 0)
         this.$nextTick(() => {
@@ -353,25 +366,25 @@ export default {
     /**
      * 数组转成树状结构
      * @param data 数据结构 [{
-        "_parentId": 14,
-        "gmtCreate": "2019-01-15 09:44:38",
-        "gmtUpdate": "2019-01-15 09:44:38",
-        "id": 15,
-        "isShow": 1,
-        "name": "用户注册",
-        "orderIndex": 10000,
-        "parentId": 14
-    },...]
+     "_parentId": 14,
+     "gmtCreate": "2019-01-15 09:44:38",
+     "gmtUpdate": "2019-01-15 09:44:38",
+     "id": 15,
+     "isShow": 1,
+     "name": "用户注册",
+     "orderIndex": 10000,
+     "parentId": 14
+     },...]
      * @param pid 初始父节点id，一般是0
      * @return 返回结果 [{
-      label: '一级 1',
-      children: [{
-        label: '二级 1-1',
-        children: [{
-          label: '三级 1-1-1'
-        }]
-      }]
-    }
+     label: '一级 1',
+     children: [{
+     label: '二级 1-1',
+     children: [{
+     label: '三级 1-1-1'
+     }]
+     }]
+     }
      */
     convertToTreeData(data, pid) {
       const result = []
@@ -381,7 +394,7 @@ export default {
       }
       const children = []
       for (let i = 0; i < data.length; i++) {
-        const child = { parentId: 1, label: data[i] }
+        const child = {parentId: 1, label: data[i]}
         children.push(child)
       }
       root.children = children
@@ -392,31 +405,31 @@ export default {
       return row.name + (row.version ? ' (' + row.version + ')' : '')
     },
     // table
-    loadTable: function(param) {
+    loadTable: function (param) {
       if (!this.searchFormData.serviceId) {
         this.tip('请选择一个服务', 'error')
         return
       }
       const postData = param || this.searchFormData
-      this.post('route.page', postData, function(resp) {
+      this.post('route.page', postData, function (resp) {
         this.pageInfo = resp.data
       })
     },
-    onSearchTable: function() {
+    onSearchTable: function () {
       this.searchFormData.pageIndex = 1
       this.loadTable()
     },
-    onTableUpdate: function(row) {
+    onTableUpdate: function (row) {
       this.routeDialogTitle = '修改路由'
       this.routeDialogVisible = true
       this.$nextTick(() => {
         Object.assign(this.routeDialogFormData, row)
       })
     },
-    onTableAuth: function(row) {
+    onTableAuth: function (row) {
       this.authDialogFormData.routeId = row.id
-      const searchData = { id: row.id, serviceId: this.serviceId }
-      this.post('route.role.get', searchData, function(resp) {
+      const searchData = {id: row.id, serviceId: this.serviceId}
+      this.post('route.role.get', searchData, function (resp) {
         const roleList = resp.data
         const roleCodes = []
         for (let i = 0; i < roleList.length; i++) {
@@ -426,13 +439,13 @@ export default {
         this.authDialogVisible = true
       })
     },
-    onTableDel: function(row) {
-      this.confirm(`确认要删除路由【${row.id}】吗？`, function(done) {
+    onTableDel: function (row) {
+      this.confirm(`确认要删除路由【${row.id}】吗？`, function (done) {
         const data = {
           serviceId: this.serviceId,
           id: row.id
         }
-        this.post('route.del', data, function() {
+        this.post('route.del', data, function () {
           done()
           this.tip('删除成功')
           this.loadTable()
@@ -441,20 +454,20 @@ export default {
     },
     // element-ui switch开关 点击按钮后，弹窗确认后再改变开关状态
     // https://blog.csdn.net/Gomeer/article/details/103697593
-    onChangeStatus: function(row) {
+    onChangeStatus: function (row) {
       const newStatus = row.status
       const oldStatus = newStatus === 1 ? 2 : 1
       // 先将状态改成原来的值
       row.status = oldStatus
       const nameVersion = this.getNameVersion(row)
       const msg = oldStatus === 1 ? `确认要禁用 ${nameVersion} 吗？` : `确认要启用 ${nameVersion} 吗？`
-      this.confirm(msg, function(done) {
+      this.confirm(msg, function (done) {
         const data = {
           id: row.id,
           status: newStatus
         }
         // 'route.role.update', this.authDialogFormData
-        this.post('route.status.update', data, function() {
+        this.post('route.status.update', data, function () {
           done()
           row.status = newStatus
         })
@@ -463,23 +476,23 @@ export default {
         done()
       })
     },
-    onCloseRouteDialog: function() {
+    onCloseRouteDialog: function () {
       this.resetForm('routeDialogFormRef')
     },
-    routePropDisabled: function() {
+    routePropDisabled: function () {
       if (!this.routeDialogFormData.id) {
         return false
       }
       return !this.isCustomService
     },
-    loadRouteRole: function() {
+    loadRouteRole: function () {
       if (this.roles.length === 0) {
-        this.post('role.listall', {}, function(resp) {
+        this.post('role.listall', {}, function (resp) {
           this.roles = resp.data
         })
       }
     },
-    addRoute: function() {
+    addRoute: function () {
       this.routeDialogTitle = '新建路由'
       this.routeDialogVisible = true
       this.$nextTick(() => {
@@ -488,7 +501,7 @@ export default {
         })
       })
     },
-    roleRender: function(row) {
+    roleRender: function (row) {
       const html = []
       const roles = row.roles
       for (let i = 0; i < roles.length; i++) {
@@ -496,34 +509,34 @@ export default {
       }
       return html.length > 0 ? html.join(', ') : '点击授权'
     },
-    onRouteDialogSave: function() {
+    onRouteDialogSave: function () {
       this.$refs.routeDialogFormRef.validate((valid) => {
         if (valid) {
           const uri = this.routeDialogFormData.id ? 'route.status.update' : 'route.add'
           this.routeDialogFormData.serviceId = this.serviceId
-          this.post(uri, this.routeDialogFormData, function() {
+          this.post(uri, this.routeDialogFormData, function () {
             this.routeDialogVisible = false
             this.loadTable()
           })
         }
       })
     },
-    onAuthDialogSave: function() {
-      this.post('route.role.update', this.authDialogFormData, function() {
+    onAuthDialogSave: function () {
+      this.post('route.role.update', this.authDialogFormData, function () {
         this.authDialogVisible = false
         this.loadTable()
       })
     },
-    addService: function() {
+    addService: function () {
       this.addServiceDialogVisible = true
     },
-    closeAddServiceDlg: function() {
+    closeAddServiceDlg: function () {
       this.$refs.addServiceForm.resetFields()
     },
-    onAddService: function() {
+    onAddService: function () {
       this.$refs.addServiceForm.validate((valid) => {
         if (valid) {
-          this.post('service.custom.add', this.addServiceForm, function(resp) {
+          this.post('service.custom.add', this.addServiceForm, function (resp) {
             this.addServiceDialogVisible = false
             this.tip('添加成功')
             this.loadTree()
@@ -531,24 +544,24 @@ export default {
         }
       })
     },
-    onDelService: function(data) {
+    onDelService: function (data) {
       const serviceId = data.serviceId
-      this.confirm('确认要删除服务' + serviceId + '吗，【对应的路由配置会一起删除】', function(done) {
+      this.confirm('确认要删除服务' + serviceId + '吗，【对应的路由配置会一起删除】', function (done) {
         const postData = {
           serviceId: serviceId
         }
-        this.post('service.custom.del', postData, function() {
+        this.post('service.custom.del', postData, function () {
           done()
           this.tip('删除成功')
           this.loadTree()
         })
       })
     },
-    onSizeChange: function(size) {
+    onSizeChange: function (size) {
       this.searchFormData.pageSize = size
       this.loadTable()
     },
-    onPageIndexChange: function(pageIndex) {
+    onPageIndexChange: function (pageIndex) {
       this.searchFormData.pageIndex = pageIndex
       this.loadTable()
     }
